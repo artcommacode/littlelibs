@@ -1,2 +1,2 @@
 // @flow
-export default (length: number): [] => [...Array(length).keys()]
+export default (length: number): number[] => [...Array(length).keys()]
