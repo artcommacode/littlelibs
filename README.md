@@ -77,3 +77,14 @@ const getIn = (object: Object, path: string[], notFound: any = null) => (
 ```
 
 `getIn` takes an object, a path (as an array of strings) to follow through the object and an optional value (defaulting to `null`) to be returned if the path doesn't resolve. It borrows heavily from the [Clojure](https://clojure.org/) function of the [same name](http://clojuredocs.org/clojure.core/get-in).
+
+
+## assoc-in
+
+```js
+const assocIn = (object: Object, [key, ...keys]: string[], value: any): Object => (
+  {...object, [key]: keys.length ? assocIn(object[key], keys, value) : value}
+)
+```
+
+`assocIn` takes an object, a path (as above) and a value and recursively builds up a new object that's merged with the original. It's for updating (or creating) nested values in objects and is again borrowed from a Clojure core function of the [same name](http://clojuredocs.org/clojure.core/get-in).
