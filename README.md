@@ -57,6 +57,7 @@ const partition = <T>(xs: T[], fn: (x: T) => boolean): [T[], T[]] => (
 `partition` takes an array and a function to partition it by. Each value is tested by the function and if `true` is placed into the first partition and if `false` into the second.
 
 ## partial
+
 ```js
 const partial = default (fn: Function, ...args: any[]): Function => (
   (...argsN: any[]) => (
@@ -66,3 +67,13 @@ const partial = default (fn: Function, ...args: any[]): Function => (
 ```
 
 `partial` takes one function and any number of arguments and returns another function that takes any further arguments and returns the result of applying both sets of arguments to the original function. For more detail, see the Wikipedia page on [partial application](https://en.wikipedia.org/wiki/Partial_application).
+
+## get-in
+
+```js
+const getIn = (object: Object, path: string[], notFound: any = null) => (
+  path.reduce((obj, seg) => (obj && obj[seg] || notFound), object)
+)
+```
+
+`getIn` takes an object, a path (as an array of strings) to follow through the object and an optional value (defaulting to `null`) to be returned if the path doesn't resolve. It borrows heavily from the [Clojure](https://clojure.org/) function of the [same name](http://clojuredocs.org/clojure.core/get-in).
