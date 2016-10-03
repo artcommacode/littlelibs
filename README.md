@@ -88,3 +88,13 @@ const assocIn = (object: Object, [key, ...keys]: string[], value: any): Object =
 ```
 
 `assocIn` takes an object, a path (as above) and a value and recursively builds up a new object that's merged with the original. It's for updating (or creating) nested values in objects and is again borrowed from a Clojure core function of the [same name](http://clojuredocs.org/clojure.core/get-in).
+
+## mapcat
+
+```js
+const mapcat = <T, U>(fn: (x: T) => U[], xs: T[]): U[] => (
+  [].concat(...xs.map(fn))
+)
+```
+
+`mapcat` takes an array and a function that returns an array and maps this function over the given array, concatenating the results into a single array.
