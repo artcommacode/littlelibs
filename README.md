@@ -98,3 +98,18 @@ const mapcat = <T, U>(fn: (x: T) => U[], xs: T[]): U[] => (
 ```
 
 `mapcat` takes an array and a function that returns an array and maps this function over the given array, concatenating the results into a single array.
+
+## fnull
+
+```js
+const fnull = (fn: Function, ...args: any[]): Function => (
+  (...argsN: any[]) => {
+    const newArgs = args.reduce(([newArgs, [next, ...rest]], arg) => (
+      [[...newArgs, arg === null ? next : arg], arg === null ? rest : [next, ...rest]]
+    ), [[], argsN])[0]
+    return fn(...newArgs)
+  }
+)
+```
+
+`fnull` takes a function and arguments to be passed to that function and returns a new function for any further arguments. If any of the first set of arguments is `null` they'll be replaced in-order by arguments from the second set. The idea for this function is once again borrowed from Clojure's core library, this time [fnil](http://clojuredocs.org/clojure.core/fnil).
