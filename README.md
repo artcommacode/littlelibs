@@ -97,7 +97,7 @@ const mapcat = <T, U>(fn: (x: T) => U[], xs: T[]): U[] => (
 )
 ```
 
-`mapcat` takes an array and a function that returns an array and maps this function over the given array, concatenating the results into a single array.
+`mapcat` takes an array and a function that returns an array and maps this function over the given array, concatenating the results into a single array. Similarities will be found in Clojure's own [mapcat](https://clojuredocs.org/clojure.core/mapcat).
 
 ## fnull
 
