@@ -56,7 +56,7 @@ const partition = <T>(xs: T[], fn: (x: T) => boolean): [T[], T[]] => (
 
 `partition` takes an array and a function to partition it by. Each value is tested by the function and if `true` is placed into the first partition and if `false` into the second.
 
-## partial
+## partial
 
 ```js
 const partial = default (fn: Function, ...args: any[]): Function => (
@@ -68,7 +68,7 @@ const partial = default (fn: Function, ...args: any[]): Function => (
 
 `partial` takes one function and any number of arguments and returns another function that takes any further arguments and returns the result of applying both sets of arguments to the original function. For more detail, see the Wikipedia page on [partial application](https://en.wikipedia.org/wiki/Partial_application).
 
-## get-in
+## get-in
 
 ```js
 const getIn = (object: Object, path: string[], notFound: any = null) => (
@@ -99,7 +99,7 @@ const mapcat = <T, U>(fn: (x: T) => U[], xs: T[]): U[] => (
 
 `mapcat` takes an array and a function that returns an array and maps this function over the given array, concatenating the results into a single array. Similarities will be found in Clojure's own [mapcat](https://clojuredocs.org/clojure.core/mapcat).
 
-## fnull
+## fnull
 
 ```js
 const fnull = (fn: Function, ...args: any[]): Function => (
@@ -113,3 +113,22 @@ const fnull = (fn: Function, ...args: any[]): Function => (
 ```
 
 `fnull` takes a function and arguments to be passed to that function and returns a new function for any further arguments. If any of the first set of arguments is `null` they'll be replaced in-order by arguments from the second set. The idea for this function is once again borrowed from Clojure's core library, this time [fnil](http://clojuredocs.org/clojure.core/fnil).
+
+## chunkify
+
+```js
+const chunkify = <T>(size: number, xs: T[]) =>
+  xs.reduce(
+    (xss: T[][], x: T) =>
+      xss.length === 0 || xss[xss.length - 1].length === size
+        ? xss.concat([[x]])
+        : [
+            ...xss.slice(0, xss.length - 1),
+            xss[xss.length - 1].concat([x]),
+            ...xss.slice(xss.length)
+          ],
+    []
+  )
+```
+
+`chunkify` takes a number and an array and "chunks" the array into an array of arrays of that size. If the number of elements don't fit neatly into equal-sized arrays then the last array will be the size of the remaining number of elements.
